@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>FastPrice - Comparador de precios</title>
+
+  <!-- CSS  -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+
+  <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}" >
+
+  <link rel="stylesheet" href="{% static 'css/fuentes.css' %}" >
+
+</head>
+<body>
+  <div>
+  <nav class="nav-wrapper red">
+    <div class="container">
+      <!--<img src="{% static 'slider/convertido.ico' %}"> -->
+      <a href="{% url 'inicio' %}" class="brand-logo">FastPri$e</a>
+      <a href="#" data-activate="mobile-demo" class="button-collapse" class="material-icons">
+      <ul class="right hide-on-med-and-down">
+        <li><a href="{% url 'inicio' %}" class="black-text"><i class="material-icons left black-text">home</i>Inicio</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="" class="black-text"><i class="material-icons left black-text">account_circle</i>{{user.username}}</a></li>
+
+        <li><a href="{% url 'logout' %}" class="black-text"><i class="material-icons left black-text">account_box</i>Cerrar Sesion</a></li>
+        {% else %}
+
+          <li><a href="{% url 'registrar' %}" class="black-text"><i class="material-icons left black-text">person_add</i>Registrar</a></li>
+          <li><a href="{% url 'login' %}" class="black-text"><i class="material-icons left black-text">account_box</i>Acceder</a></li>
+
+        {% endif %}
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="{% url 'inicio' %}"><i class="material-icons left">home</i>Inicios</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="" class="black-text"><i class="material-icons left black-text">account_circle</i>{{user.username}}</a></li>
+        <li><a href="{% url 'logout' %}" class="black-text"><i class="material-icons left black-text">account_box</i>Cerrar Sesion</a></li>
+        {% else %}
+          <li><a href="{% url 'registrar' %}" class="black-text"><i class="material-icons left black-text">person_add</i>Registrar</a></li>
+          <li><a href="{% url 'login' %}" class="black-text"><i class="material-icons left black-text">account_box</i>Acceder</a></li>
+        {% endif %}
+      </ul>
+      <a href="" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+    
+</section>    
+
+    <section class="container">
+        <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn black-text" style="position: right;  background-color: orange" type="submit">Iniciar Sesión</button>
+        </form>     
+    </section>
+
+
+<br><br>
+  <footer class="page-footer red">
+    <div>
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Biografía</h5>
+          <p align="justify" class="grey-text text-lighten-4">FastPrice es una página web diseñada por un grupo de jóvenes emprendedores de la O&M para
+          brindar un servicios a las personas que buscan comparar los mejores precios de los productos que desean comprar en sus tiendas favoritas.
+           </p>
+
+        </div>
+
+        <div class="col l3 s12">
+          <h5 class="white-text">Contactos</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Carlos Fenelon</a></li>
+            <li><a class="white-text" href="#!">Mederlin Batista</a></li>
+            <li><a class="white-text" href="#!">Angel Antonio</a></li>
+            <li><a class="white-text" href="#!">Gerick Alexander</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Redes Sociales</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Facebook/EasyPrice</a></li>
+            <li><a class="white-text" href="#!">Twitter/@EasyPrice</a></li>
+            <li><a class="white-text" href="#!">Instagram/@EasyPrice</a></li>
+            <li><a class="white-text" href="#!">WhatsApp/849-330-9885</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container center">
+      Copyright 2019 EasyPrice | Todos los derechos reservados.<a class="orange-text text-lighten-3"></a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        $('.sidenav').sidenav(); })
+    </script>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'info' %}
+            <script> 
+            M.toast({html:"{{message}}", classes: 'black rounded',
+            displayLength:2000});</script>
+        {% elif message.tags == 'warning' %}
+            <script> 
+            M.toast({html:"{{message}}", classes: 'black rounded',
+            displayLength:10000});</script>
+        {% elif message.tags == 'error' %}
+            <script> 
+            M.toast({html:"{{message}}", classes: 'black rounded',
+            displayLength:10000});</script>
+       {% endif %}
+    {% endfor %}
+  {% endif %}
+</body>
+</html>
